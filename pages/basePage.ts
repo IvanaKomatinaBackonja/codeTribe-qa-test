@@ -43,4 +43,19 @@ export class BasePage {
       return (await locator.allTextContents()).map((t) => t.trim());
     });
   }
+
+  /**
+   * Retrieves and returns the trimmed text content of a locator.
+   * @param locator     Playwright Locator
+   * @param description Description of the element, shown in the report as "Get text from {description}"
+   */
+  async getTextFromElement(
+    locator: Locator,
+    description: string,
+  ): Promise<string> {
+    return await test.step(`Get text from ${description}`, async () => {
+      const raw = await locator.textContent();
+      return raw?.trim() ?? "";
+    });
+  }
 }

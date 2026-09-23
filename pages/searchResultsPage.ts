@@ -40,6 +40,13 @@ export class SearchResultsPage extends BasePage {
       return normalized === "" || isNaN(number) || number <= 0;
     });
   }
+
+  async openProductByName(name: string): Promise<void> {
+    await this.click(
+      this.productNames.filter({ hasText: name }),
+      `product "${name}"`,
+    );
+  }
 }
 
 export default SearchResultsPage;
