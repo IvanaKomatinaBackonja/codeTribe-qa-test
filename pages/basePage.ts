@@ -1,0 +1,46 @@
+import { Locator, Page, test } from "@playwright/test";
+
+export class BasePage {
+  constructor(protected readonly page: Page) {}
+
+  /**
+   * Performs a click on the given locator.
+   * @param locator     Playwright Locator (getByRole, getByText, getByLabel, itd.)
+   * @param description Description of the element, shown in the report as "Click {description}"
+   */
+  async click(locator: Locator, description: string): Promise<void> {
+    await test.step(`Click ${description}`, async () => {
+      await locator.click();
+    });
+  }
+
+  /**
+   * Fills an input with the given value.
+   * @param locator     Playwright Locator
+   * @param value       The string to type into the element
+   * @param description Description of the element, shown in the report as "Fill {description} with "value""
+   */
+  async fill(
+    locator: Locator,
+    value: string,
+    description: string,
+  ): Promise<void> {
+    await test.step(`Fill ${description} with "${value}"`, async () => {
+      await locator.fill(value);
+    });
+  }
+
+  /**
+   * Retrieves and trims the text content of all elements matching the locator.
+   * @param locator     Playwright Locator
+   * @param description Description of the elements, shown in the report as "Get all texts from {description}"
+   */
+  async getAllTextsFromElements(
+    locator: Locator,
+    description: string,
+  ): Promise<string[]> {
+    return await test.step(`Get all texts from ${description}`, async () => {
+      return (await locator.allTextContents()).map((t) => t.trim());
+    });
+  }
+}

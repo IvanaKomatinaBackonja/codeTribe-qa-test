@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
  "scripts": {
-  "test:chrome": "npx playwright test --project=chromium",
-  "test:firefox": "npx playwright test --project=firefox",
-  "test:safari": "npx playwright test --project=webkit",
-  "test": "npx playwright test",
-  "test:report": "npx playwright show-report"
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed",
+    "test:chrome": "npx playwright test --project=chromium",
+    "test:chrome:headed": "npx playwright test --project=chromium --headed",
+    "test:firefox": "npx playwright test --project=firefox",
+    "test:firefox:headed": "npx playwright test --project=firefox --headed",
+    "test:safari": "npx playwright test --project=webkit",
+    "test:safari:headed": "npx playwright test --project=webkit --headed",
+    "test:report": "npx playwright show-report"
   },
   "keywords": [],
   "author": "",
