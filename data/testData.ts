@@ -3,4 +3,5 @@ export const testData = {
   apparelAndShoesUrl: "/apparel-shoes",
   apparelAndShoesCategoryName: "Apparel & Shoes",
   pageTwoUrlParam: "pagenumber=2",
+  sortOption: "Price: Low to High",
 };

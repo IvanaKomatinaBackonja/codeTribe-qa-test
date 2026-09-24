@@ -72,4 +72,16 @@ export class BasePage {
       return await locator.getAttribute(attributeName);
     });
   }
+
+  /**
+   * Selects an option from a dropdown (native <select> element).
+   * @param locator     Playwright Locator (the <select> element)
+   * @param optionLabel The visible text of the option to select
+   * @param description Description of the dropdown, shown in the report as "Select "{optionLabel}" from {description}"
+   */
+  async selectOption(locator: Locator, optionLabel: string, description: string): Promise<void> {
+    await test.step(`Select "${optionLabel}" from ${description}`, async () => {
+      await locator.selectOption({ label: optionLabel });
+    });
+  }
 }

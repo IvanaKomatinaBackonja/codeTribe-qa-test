@@ -1,5 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./basePage";
+import { isAscending } from "../utils/sorting";
 
 export class ProductListPage extends BasePage {
   readonly productNames: Locator;
@@ -8,6 +9,7 @@ export class ProductListPage extends BasePage {
   readonly categoryTitle: Locator;
   readonly breadcrumbCategory: Locator;
   readonly pageTwoLink: Locator;
+  readonly sortDropdown: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -17,6 +19,7 @@ export class ProductListPage extends BasePage {
     this.categoryTitle = page.getByRole("heading", { name: "Apparel & Shoes" });
     this.breadcrumbCategory = page.locator(".breadcrumb").getByText("Apparel & Shoes");
     this.pageTwoLink = page.getByRole("link", { name: "2" });
+    this.sortDropdown = page.locator("#products-orderby");
   }
 
   async getProductNames(): Promise<string[]> {
@@ -53,6 +56,17 @@ export class ProductListPage extends BasePage {
 
   async goToPageTwo(): Promise<void> {
     await this.click(this.pageTwoLink, "page 2 link");
+  }
+
+  async selectSortOption(optionText: string): Promise<void> {
+    await this.selectOption(this.sortDropdown, optionText, "sort dropdown");
+    await this.page.waitForURL(/orderby=/);
+  }
+
+  async arePricesSortedAscending(): Promise<boolean> {
+    const prices = await this.getProductPrices();
+    const numericPrices = prices.map((p) => parseFloat(p.replace(/[^\d.]/g, "")));
+    return isAscending(numericPrices);
   }
 }
 

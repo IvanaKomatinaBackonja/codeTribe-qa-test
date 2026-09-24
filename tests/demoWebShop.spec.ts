@@ -158,3 +158,17 @@ test.describe("Category", () => {
     expect(productNamesPageTwo, "Products on page 2 should not be the same as page 1").not.toEqual(productNamesPageOne);
   });
 })
+
+test.describe("Sort", () => {
+  test("TC-09 - Validate that a sort option can be applied on the category page", async ({ homePage, productListPage }) => {
+  await homePage.goToApparelAndShoesCategory();
+
+  await productListPage.selectSortOption(testData.sortOption);
+
+  const selectedLabel = await productListPage.sortDropdown.locator("option:checked").textContent();
+  expect(selectedLabel?.trim(), `Expected selected sort option to be "${testData.sortOption}"`).toBe(testData.sortOption);
+
+  const pricesSorted = await productListPage.arePricesSortedAscending();
+  expect(pricesSorted, "Prices should be sorted in ascending order").toBe(true);
+  });
+})
