@@ -7,6 +7,7 @@ export class ProductListPage extends BasePage {
   readonly addToCartButtons: Locator;
   readonly categoryTitle: Locator;
   readonly breadcrumbCategory: Locator;
+  readonly pageTwoLink: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -15,6 +16,7 @@ export class ProductListPage extends BasePage {
     this.addToCartButtons = page.locator(".product-box-add-to-cart-button");
     this.categoryTitle = page.getByRole("heading", { name: "Apparel & Shoes" });
     this.breadcrumbCategory = page.locator(".breadcrumb").getByText("Apparel & Shoes");
+    this.pageTwoLink = page.getByRole("link", { name: "2" });
   }
 
   async getProductNames(): Promise<string[]> {
@@ -47,6 +49,10 @@ export class ProductListPage extends BasePage {
 
   async openProductByName(name: string): Promise<void> {
     await this.click(this.productNames.filter({ hasText: name }), `product "${name}"`);
+  }
+
+  async goToPageTwo(): Promise<void> {
+    await this.click(this.pageTwoLink, "page 2 link");
   }
 }
 

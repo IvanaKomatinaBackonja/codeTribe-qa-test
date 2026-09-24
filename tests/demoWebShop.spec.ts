@@ -135,4 +135,12 @@ test.describe("Category", () => {
     const breadcrumbText = await productListPage.getTextFromElement(productListPage.breadcrumbCategory, "breadcrumb");
     expect(breadcrumbText, `Expected breadcrumb "${breadcrumbText}" to be "${testData.apparelAndShoesCategoryName}"`).toBe(testData.apparelAndShoesCategoryName);
   });
+
+  test("TC-07 - Validate pagination on desired category page works correctly", async ({ page, homePage, productListPage }) => {
+    await homePage.goToApparelAndShoesCategory();
+
+    await productListPage.goToPageTwo();
+
+    await expect(page, `Expected URL to contain "${testData.pageTwoUrlParam}"`).toHaveURL(new RegExp(testData.pageTwoUrlParam));
+  });
 })
