@@ -6,6 +6,7 @@ export class HomePage extends BasePage {
   readonly searchButton: Locator;
   readonly computersCategoryLink: Locator;
   readonly desktopsSubcategoryLink: Locator;
+  readonly apparelAndShoesCategoryLink: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -13,6 +14,7 @@ export class HomePage extends BasePage {
     this.searchButton = page.locator(".search-box-button");
     this.computersCategoryLink = page.locator('a:has-text("COMPUTERS")').first();
     this.desktopsSubcategoryLink = page.locator("h2[class='title'] a[title='Show products in category Desktops']");
+    this.apparelAndShoesCategoryLink = page.locator('a:has-text("APPAREL & SHOES")').first();
   }
 
   async search(value: string): Promise<void> {
@@ -22,7 +24,11 @@ export class HomePage extends BasePage {
 
   async goToDesktopsCategory(): Promise<void> {
     await this.click(this.computersCategoryLink, '"Computers" category link');
-    await this.click(this.desktopsSubcategoryLink,'"Desktops" subcategory link');
+    await this.click(this.desktopsSubcategoryLink, '"Desktops" subcategory link');
+  }
+
+  async goToApparelAndShoesCategory(): Promise<void> {
+    await this.click(this.apparelAndShoesCategoryLink, '"Apparel & Shoes" category link');
   }
 }
 

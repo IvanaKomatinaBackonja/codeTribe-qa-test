@@ -122,3 +122,17 @@ test.describe("Product detail page", () => {
     expect(buttonText, `Expected "${buttonText}" to be "Add to cart"`).toBe("Add to cart");
   });
 });
+
+test.describe("Category", () => {
+  test("TC-06 - Validate navigation to the 'Apparel & Shoes' category", async ({ page, homePage, productListPage }) => {
+    await homePage.goToApparelAndShoesCategory();
+
+    await expect(page, `Expected to land on the "${testData.apparelAndShoesCategoryName}" category page (${testData.apparelAndShoesUrl})`).toHaveURL(testData.apparelAndShoesUrl);
+
+    const categoryTitleText = await productListPage.getTextFromElement(productListPage.categoryTitle, "category title");
+    expect(categoryTitleText, `Expected category title "${categoryTitleText}" to be "${testData.apparelAndShoesCategoryName}"`).toBe(testData.apparelAndShoesCategoryName);
+
+    const breadcrumbText = await productListPage.getTextFromElement(productListPage.breadcrumbCategory, "breadcrumb");
+    expect(breadcrumbText, `Expected breadcrumb "${breadcrumbText}" to be "${testData.apparelAndShoesCategoryName}"`).toBe(testData.apparelAndShoesCategoryName);
+  });
+})

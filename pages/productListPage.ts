@@ -5,12 +5,16 @@ export class ProductListPage extends BasePage {
   readonly productNames: Locator;
   readonly productPrices: Locator;
   readonly addToCartButtons: Locator;
+  readonly categoryTitle: Locator;
+  readonly breadcrumbCategory: Locator;
 
   constructor(page: Page) {
     super(page);
     this.productNames = page.locator(".product-item .product-title");
     this.productPrices = page.locator(".product-item .price.actual-price");
     this.addToCartButtons = page.locator(".product-box-add-to-cart-button");
+    this.categoryTitle = page.getByRole("heading", { name: "Apparel & Shoes" });
+    this.breadcrumbCategory = page.locator(".breadcrumb").getByText("Apparel & Shoes");
   }
 
   async getProductNames(): Promise<string[]> {
@@ -20,9 +24,7 @@ export class ProductListPage extends BasePage {
 
   async getUnrelatedProductNames(value: string): Promise<string[]> {
     const names = await this.getProductNames();
-    return names.filter(
-      (name) => !name.toLowerCase().includes(value.toLowerCase()),
-    );
+    return names.filter((name) => !name.toLowerCase().includes(value.toLowerCase()));
   }
 
   async getProductPrices(): Promise<string[]> {
@@ -44,10 +46,7 @@ export class ProductListPage extends BasePage {
   }
 
   async openProductByName(name: string): Promise<void> {
-    await this.click(
-      this.productNames.filter({ hasText: name }),
-      `product "${name}"`,
-    );
+    await this.click(this.productNames.filter({ hasText: name }), `product "${name}"`);
   }
 }
 
