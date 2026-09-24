@@ -143,4 +143,18 @@ test.describe("Category", () => {
 
     await expect(page, `Expected URL to contain "${testData.pageTwoUrlParam}"`).toHaveURL(new RegExp(testData.pageTwoUrlParam));
   });
+
+  test("TC-08 - Validate products are displayed on both pages", async ({ homePage, productListPage }) => {
+    await homePage.goToApparelAndShoesCategory();
+
+    const productNamesPageOne = await productListPage.getProductNames();
+    expect(productNamesPageOne.length, "Page 1 should display products").toBeGreaterThan(0);
+
+    await productListPage.goToPageTwo();
+
+    const productNamesPageTwo = await productListPage.getProductNames();
+    expect(productNamesPageTwo.length, "Page 2 should display products").toBeGreaterThan(0);
+
+    expect(productNamesPageTwo, "Products on page 2 should not be the same as page 1").not.toEqual(productNamesPageOne);
+  });
 })
