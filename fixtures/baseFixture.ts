@@ -1,12 +1,12 @@
 import { test as base } from "@playwright/test";
 import { HomePage } from "../pages/homePage";
-import { SearchResultsPage } from "../pages/searchResultsPage";
+import { ProductListPage } from "../pages/productListPage";
 import ProductDetailsPage from "../pages/productDetailsPage";
 
 type Pages = {
   gotoHomePage: void;
   homePage: HomePage;
-  searchResultsPage: SearchResultsPage;
+  productListPage: ProductListPage;
   productDetailsPage: ProductDetailsPage;
 };
 
@@ -23,8 +23,8 @@ export const test = base.extend<Pages>({
     await use(new HomePage(page));
   },
 
-  searchResultsPage: async ({ page }, use) => {
-    await use(new SearchResultsPage(page));
+  productListPage: async ({ page }, use) => {
+    await use(new ProductListPage(page));
   },
 
   productDetailsPage: async ({ page }, use) => {

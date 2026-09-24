@@ -1,14 +1,16 @@
 import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./basePage";
 
-export class SearchResultsPage extends BasePage {
+export class ProductListPage extends BasePage {
   readonly productNames: Locator;
   readonly productPrices: Locator;
+  readonly addToCartButtons: Locator;
 
   constructor(page: Page) {
     super(page);
     this.productNames = page.locator(".product-item .product-title");
     this.productPrices = page.locator(".product-item .price.actual-price");
+    this.addToCartButtons = page.locator(".product-box-add-to-cart-button");
   }
 
   async getProductNames(): Promise<string[]> {
@@ -49,4 +51,4 @@ export class SearchResultsPage extends BasePage {
   }
 }
 
-export default SearchResultsPage;
+export default ProductListPage;

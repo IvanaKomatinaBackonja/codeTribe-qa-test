@@ -58,4 +58,16 @@ export class BasePage {
       return raw?.trim() ?? "";
     });
   }
+
+  /**
+   * Checks whether all elements matching the locator are visible.
+   * @param locator Playwright Locator (collection of elements)
+   */
+  async allElementsAreVisible(locator: Locator): Promise<boolean> {
+    const count = await locator.count();
+    for (let i = 0; i < count; i++) {
+      if (!(await locator.nth(i).isVisible())) return false;
+    }
+    return true;
+  }
 }
