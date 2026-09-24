@@ -20,11 +20,7 @@ export class BasePage {
    * @param value       The string to type into the element
    * @param description Description of the element, shown in the report as "Fill {description} with "value""
    */
-  async fill(
-    locator: Locator,
-    value: string,
-    description: string,
-  ): Promise<void> {
+  async fill(locator: Locator, value: string, description: string): Promise<void> {
     await test.step(`Fill ${description} with "${value}"`, async () => {
       await locator.fill(value);
     });
@@ -35,10 +31,7 @@ export class BasePage {
    * @param locator     Playwright Locator
    * @param description Description of the elements, shown in the report as "Get all texts from {description}"
    */
-  async getAllTextsFromElements(
-    locator: Locator,
-    description: string,
-  ): Promise<string[]> {
+  async getAllTextsFromElements(locator: Locator, description: string): Promise<string[]> {
     return await test.step(`Get all texts from ${description}`, async () => {
       return (await locator.allTextContents()).map((t) => t.trim());
     });
@@ -49,10 +42,7 @@ export class BasePage {
    * @param locator     Playwright Locator
    * @param description Description of the element, shown in the report as "Get text from {description}"
    */
-  async getTextFromElement(
-    locator: Locator,
-    description: string,
-  ): Promise<string> {
+  async getTextFromElement(locator: Locator, description: string): Promise<string> {
     return await test.step(`Get text from ${description}`, async () => {
       const raw = await locator.textContent();
       return raw?.trim() ?? "";
@@ -69,5 +59,17 @@ export class BasePage {
       if (!(await locator.nth(i).isVisible())) return false;
     }
     return true;
+  }
+
+  /**
+   * Gets the value of a specified attribute from a locator.
+   * @param locator     Playwright Locator
+   * @param attributeName The name of the attribute to retrieve
+   * @param description Description of the element, shown in the report as "Get {attributeName} attribute from {description}"
+   */
+  async getAttribute(locator: Locator, attributeName: string, description: string): Promise<string | null> {
+    return await test.step(`Get ${attributeName} attribute from ${description}`, async () => {
+      return await locator.getAttribute(attributeName);
+    });
   }
 }

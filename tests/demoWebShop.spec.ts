@@ -91,3 +91,34 @@ test.describe('Product list page', () => {
     expect(addToCartCount, `Expected ${productCount} Add to Cart buttons, but found ${addToCartCount}`).toBe(productCount);
   });
 });
+
+test.describe("Product detail page", () => {
+  // This test randomly selects a product using Math.floor(Math.random() * productNames.length).
+  // Sometimes it lands on a product that has no "Add to Cart" button on the details page,
+  // and the test fails there — intentionally flagging the bug already noted for the product list.
+  test("TC-05 - Validate title, price, and 'Add to Cart' button are visible on product details page", async ({ homePage, productListPage, productDetailsPage }) => {
+    await homePage.goToDesktopsCategory();
+
+    const productNames = await productListPage.getProductNames();
+    const productPrices = await productListPage.getProductPrices();
+
+    const randomIndex = Math.floor(Math.random() * productNames.length);
+    const selectedName = productNames[randomIndex];
+    const selectedPrice = productPrices[randomIndex];
+
+    await productListPage.openProductByName(selectedName);
+
+    await expect(productDetailsPage.productTitle, "Product title should be visible").toBeVisible();
+    await expect(productDetailsPage.productPrice, "Product price should be visible").toBeVisible();
+    await expect(productDetailsPage.addToCartButton, "Add to Cart button should be visible").toBeVisible();
+
+    const actualTitle = await productDetailsPage.getTitleText();
+    expect(actualTitle, `Expected "${actualTitle}" to be "${selectedName}"`).toBe(selectedName);
+
+    const actualPrice = await productDetailsPage.getPriceText();
+    expect(actualPrice, `Expected "${actualPrice}" to be "${selectedPrice}"`).toBe(selectedPrice);
+
+    const buttonText = await productDetailsPage.getAddToCartButtonText();
+    expect(buttonText, `Expected "${buttonText}" to be "Add to cart"`).toBe("Add to cart");
+  });
+});
