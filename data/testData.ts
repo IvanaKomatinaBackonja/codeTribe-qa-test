@@ -1,7 +1,27 @@
 export const testData = {
-  searchTerm: "computer",
-  apparelAndShoesUrl: "/apparel-shoes",
-  apparelAndShoesCategoryName: "Apparel & Shoes",
-  pageTwoUrlParam: "pagenumber=2",
-  sortOption: "Price: Low to High",
-};
+  search: {
+    term: "computer",
+  },
+
+  categories: {
+    computers: {
+      name: "Computers",
+      url: "/computers",
+      subcategories: {
+        desktops: { name: "Desktops", url: "/desktops" },
+      },
+    },
+    apparelAndShoes: {
+      name: "Apparel & Shoes",
+      url: "/apparel-shoes",
+    },
+  },
+
+  pagination: {
+    pageTwoUrlParam: "pagenumber=2",
+  },
+
+  sort: {
+    option: "Price: Low to High",
+  },
+} as const;

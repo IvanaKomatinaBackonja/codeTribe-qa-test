@@ -3,6 +3,7 @@ import { BasePage } from "./basePage";
 import { isAscending } from "../utils/sorting";
 
 export class ProductListPage extends BasePage {
+  readonly productItems: Locator;
   readonly productNames: Locator;
   readonly productPrices: Locator;
   readonly addToCartButtons: Locator;
@@ -13,6 +14,7 @@ export class ProductListPage extends BasePage {
 
   constructor(page: Page) {
     super(page);
+    this.productItems = page.locator(".product-item");
     this.productNames = page.locator(".product-item .product-title");
     this.productPrices = page.locator(".product-item .price.actual-price");
     this.addToCartButtons = page.locator(".product-box-add-to-cart-button");
